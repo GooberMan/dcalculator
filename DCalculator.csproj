@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{72ABCEC5-A934-4414-940D-57A2A3F1AE0F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>DCalculator</RootNamespace>
@@ -11,10 +11,10 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <OutputPath>bin\$(OS)\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -23,7 +23,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -63,6 +62,7 @@
     </EmbeddedResource>
     <None Include="builddcalculatorbinderoo.bat" />
     <None Include="dcalculator.d" />
+    <None Include="builddcalculatorbinderoo.sh" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,7 +75,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>cd $(ProjectDir)
+    <PreBuildEvent Condition="'$(OS)' == 'Unix'">cd $(ProjectDir)
+bash ./builddcalculatorbinderoo.sh $(Configuration) monodevelop</PreBuildEvent>
+    <PreBuildEvent Condition="'$(OS)' == 'Windows_NT'">cd $(ProjectDir)
 call $(ProjectDir)builddcalculatorbinderoo.bat</PreBuildEvent>
   </PropertyGroup>
 </Project>
