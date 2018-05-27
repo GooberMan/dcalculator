@@ -2,7 +2,7 @@
 
 module dcalculator;
 
-public import binderoo.binding.binding;
+public import binderoo.binding;
 import binderoo.util.structofarrays;
 
 import std.conv : to;
